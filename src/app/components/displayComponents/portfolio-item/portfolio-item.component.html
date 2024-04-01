@@ -1,0 +1,91 @@
+<div class="card m-2">
+  <div class="card-header d-flex align-items-baseline">
+    <p class="card-title big-font mb-0 me-1">
+      {{ portfolioItem.ticker }}
+    </p>
+    <p class="card-subtitle mb-0 text-secondary medium-font">
+      {{ portfolioItem.name }}
+    </p>
+  </div>
+  <div class="card-body">
+    <div class="row font-bold">
+      <div class="col-6">
+        <div class="row">
+          <div class="col">
+            <p class="mb-0">Quantity:</p>
+          </div>
+          <div class="col">
+            <p class="mb-0">{{ portfolioItem.quantity | number : "1.2-2" }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <p class="mb-0">Avg. Cost / Share:</p>
+          </div>
+          <div class="col">{{ portfolioItem.avg_cost | number : "1.2-2" }}</div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <p class="mb-0">Total Cost:</p>
+          </div>
+          <div class="col">
+            <p class="mb-0">
+              {{ portfolioItem.total_cost | number : "1.2-2" }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="row">
+          <div class="col">
+            <p class="mb-0">Change:</p>
+          </div>
+          <div class="col">
+            <p
+              class="mb-0"
+              [ngClass]="is_negative ? 'text-danger' : 'text-success'"
+            >
+              <i
+                class="bi me-1"
+                [ngClass]="
+                  is_negative ? 'bi-caret-down-fill' : 'bi-caret-up-fill'
+                "
+              ></i
+              >{{ change }}
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <p class="mb-0">Current Price:</p>
+          </div>
+          <div class="col">
+            <p
+              class="mb-0"
+              [ngClass]="is_negative ? 'text-danger' : 'text-success'"
+            >
+              {{ current_price }}
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <p class="mb-0">Market Value:</p>
+          </div>
+          <div class="col">
+            <p
+              class="mb-0"
+              [ngClass]="is_negative ? 'text-danger' : 'text-success'"
+            >
+              {{ market_value }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-success me-1" (click)="openBuyModal()">Buy</button>
+    <button class="btn btn-danger" (click)="openSellModal()">Sell</button>
+  </div>
+</div>

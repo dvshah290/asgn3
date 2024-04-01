@@ -1,1 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
+
+* {
+  box-sizing: border-box;
+}
+.background-blue {
+  background-color: #2824ac;
+}
+.nav-link,
+.navbar-brand {
+  color: white !important;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.big-font {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.medium-font {
+  font-size: 1rem;
+  font-weight: 400;
+}

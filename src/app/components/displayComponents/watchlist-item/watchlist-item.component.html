@@ -1,0 +1,35 @@
+<!-- <a href="" class="text-decoration-none text-black"> -->
+<div
+  class="row border border-1 m-2 text-left justify-content-center"
+  id="watchlist"
+>
+  <div class="row">
+    <i (click)="deleteItem()" class="bi bi-x cross_icon hover"></i>
+  </div>
+  <div class="col-6 p-3 mt-0">
+    <div class="row">
+      <p class="m-0 bolder bigger">{{ watchlistItem.ticker }}</p>
+    </div>
+    <div class="row pt-2">
+      <p class="m-0 bolder">{{ watchlistItem.name }}</p>
+    </div>
+  </div>
+  <div
+    class="col-6 p-3 mt-0"
+    [ngClass]="is_negative ? 'text-red' : 'text-green'"
+  >
+    <div class="row">
+      <p class="m-0 bolder bigger">{{ current_price }}</p>
+    </div>
+    <div class="row pt-2">
+      <p class="m-1 bolder">
+        <i
+          class="bi me-1"
+          [ngClass]="is_negative ? 'bi-caret-down-fill' : 'bi-caret-up-fill'"
+        ></i
+        >{{ change }} ({{ change_percent }}%)
+      </p>
+    </div>
+  </div>
+</div>
+<!-- </a> -->

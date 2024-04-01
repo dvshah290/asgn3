@@ -1,0 +1,57 @@
+<div class="container mt-4">
+  <div class="row">
+    <div id="heading" class="col text-center">STOCK SEARCH</div>
+  </div>
+  <div class="row mt-4">
+    <div class="mx-auto" style="width: 40%">
+      <form
+        (ngSubmit)="onSubmit()"
+        id="stock-search-field"
+        class="d-flex text-center border rounded-pill border-3 px-3"
+        action="/"
+      >
+        <input
+          type="text"
+          id="input-field"
+          name="input"
+          [formControl]="inputControl"
+          [matAutocomplete]="auto"
+          class="input-field flex-grow-1"
+          placeholder="Enter Stock Ticker Symbol"
+          required
+        />
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSubmit()">
+          <mat-option *ngIf="isLoading">
+            <mat-spinner [diameter]="20"></mat-spinner>
+          </mat-option>
+          <mat-option
+            *ngFor="let option of filterOptions | async"
+            [value]="option.symbol"
+          >
+            {{ option.symbol }} | {{ option.description }}
+          </mat-option>
+        </mat-autocomplete>
+        <button type="submit" class="btn btn-outline-white no-outline p-2">
+          <i class="fas fa-search"></i>
+        </button>
+        <button
+          (click)="onClear()"
+          class="btn btn-outline-white no-outline p-1"
+          type="button"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- <div *ngIf="!isValidSearch" class="container">
+  <div
+    class="alert alert-danger mt-4 text-center mx-auto"
+    style="width: 70%"
+    role="alert"
+  >
+    No data found. Please enter a valid Ticker
+  </div>
+</div> -->

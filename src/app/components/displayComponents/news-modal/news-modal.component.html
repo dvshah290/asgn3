@@ -1,0 +1,99 @@
+<div class="modal-header align-items-center justify-content-between">
+  <div class="d-flex flex-column">
+    <p class="modal-title mb-0" id="modal-basic-title">{{ newsItem.source }}</p>
+    <p class="text-muted bolder">{{ formattedDate }}</p>
+  </div>
+  <button class="button" (click)="modal.close()">
+    <i class="bi bi-x x-button"></i>
+  </button>
+</div>
+<div class="modal-body ms-0">
+  <p class="m-0 bolder bigger">{{ newsItem.headline }}</p>
+  <p class="m-0">{{ newsItem.summary }}</p>
+  <p class="text-muted">
+    For more details click <a href="{{ newsItem.url }}" target="_blank">here</a>
+  </p>
+</div>
+<div class="modal-footer justify-content-start border border-class m-3 ps-0">
+  <div class="row p-0 m-0">
+    <p>Share</p>
+    <div class="col">
+      <a
+        class="twitter-share-button me-1"
+        target="_blank"
+        href="https://twitter.com/intent/tweet?text={{ encodedText }}&url={{
+          encodedURL
+        }}"
+      >
+        <i class="bi bi-twitter-x text-dark icon-sizing"></i
+      ></a>
+      <a
+        target="_blank"
+        href="https://www.facebook.com/sharer/sharer.php?u={{ encodedURL }}"
+        ><i class="bi bi-facebook icon-sizing"></i
+      ></a>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<!-- <div *ngIf="selectedNewsItem" class="modal fade" id="news-modal" #myModal>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="container-fluid">
+          <div class="row justify-content-between">
+            <div class="col-8 align-items-center">
+              <div class="row pb-0">
+                <h1 class="modal-title pb-0 m-0" id="exampleModalLabel">
+                  {{ selectedNewsItem.source }}
+                </h1>
+              </div>
+              <div class="row">
+                <p>
+                  {{ formattedDate }}
+                </p>
+              </div>
+            </div>
+            <div class="col-2">
+              <button type="button" class="btn">
+                <i class="bi bi-x-lg underline"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <h2>{{ selectedNewsItem.headline }}</h2>
+        <p>{{ selectedNewsItem.summary }}</p>
+        <p class="text-muted">
+          For more details click
+          <a href="{{ selectedNewsItem.url }}" target="_blank">here</a>
+        </p>
+      </div>
+      <div class="card m-2">
+        <div class="card-body">
+          <p>Share</p>
+          <a
+            class="twitter-share-button"
+            target="_blank"
+            href="https://twitter.com/intent/tweet?text={{ encodedText }}&url={{
+              encodedURL
+            }}"
+          >
+            <i class="bi bi-twitter-x text-dark"></i
+          ></a>
+          <button type="button" class="btn" data-href="websiteUrl">
+            <a
+              target="_blank"
+              href="https://www.facebook.com/sharer/sharer.php?u={{
+                encodedURL
+              }}"
+              ><i class="bi bi-facebook"></i
+            ></a>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

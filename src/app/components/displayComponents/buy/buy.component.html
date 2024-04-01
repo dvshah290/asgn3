@@ -1,0 +1,43 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">
+    {{ ticker }}
+  </h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="modal.dismiss('Cross click')"
+  ></button>
+</div>
+<div class="modal-body ms-2">
+  <p class="m-0">Current Price: {{ quote_data.c }}</p>
+  <p class="m-0">Money in Wallet: {{ balance }}</p>
+  <form>
+    <div class="mb-3">
+      <div class="d-flex align-items-center gap-2">
+        <span>Quantity: </span>
+        <input
+          type="number"
+          class="form-control"
+          [formControl]="inputControl"
+        />
+      </div>
+      <p *ngIf="!isValidQuantity && total > 0" class="text-danger mt-2">
+        Not enough money in wallet!
+      </p>
+    </div>
+  </form>
+</div>
+<div class="modal-footer d-flex align-items-center">
+  <div class="col flex-grow-1">
+    <p class="m-0">Total: {{ total }}</p>
+  </div>
+  <button
+    type="button"
+    class="btn btn-success ms-auto"
+    [disabled]="!isValidQuantity"
+    (click)="buyClicked(); modal.close('Save click')"
+  >
+    Buy
+  </button>
+</div>

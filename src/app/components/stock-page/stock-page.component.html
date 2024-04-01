@@ -1,0 +1,317 @@
+<app-home [tickerData]="ticker"></app-home>
+<div *ngIf="completeData as data; else error">
+  <div class="container mt-4">
+    <div class="row" *ngIf="watchlist_alert">
+      <div
+        class="alert alert-success mt-4 text-center mx-auto d-flex align-items-center justify-content-center p-2"
+        style="width: 70%"
+        role="alert"
+        *ngIf="is_in_watchlist; else remove"
+      >
+        <span class="flex-grow-1">
+          {{ data.profile.ticker }} added to Watchlist</span
+        >
+        <button class="btn alert-button-right" (click)="closeAlert()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <ng-template #remove>
+        <div
+          class="alert alert-danger mt-4 text-center mx-auto d-flex align-items-center justify-content-center p-2"
+          style="width: 70%"
+          role="alert"
+        >
+          <span class="flex-grow-1">
+            {{ data.profile.ticker }} removed from Watchlist</span
+          >
+          <button class="btn alert-button-right" (click)="closeAlert()">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+      </ng-template>
+    </div>
+    <div class="row" *ngIf="buy_alert">
+      <div
+        class="alert alert-success mt-4 text-center mx-auto d-flex align-items-center justify-content-center p-2"
+        style="width: 70%"
+        role="alert"
+      >
+        <span class="flex-grow-1">
+          {{ data.profile.ticker }} bought successfully</span
+        >
+        <button class="btn alert-button-right" (click)="closeAlert()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    </div>
+    <div class="row" *ngIf="sell_alert">
+      <div
+        class="alert alert-danger mt-4 text-center mx-auto d-flex align-items-center justify-content-center p-2"
+        style="width: 70%"
+        role="alert"
+      >
+        <span class="flex-grow-1">
+          {{ data.profile.ticker }} sold successfully</span
+        >
+        <button class="btn alert-button-right" (click)="closeAlert()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    </div>
+    <div class="row justify-content-center align-items-start text-center">
+      <div class="col-3">
+        <div class="card border-0">
+          <div class="card-body text-center p-0">
+            <h1 class="card-title mb-0">
+              {{ data.profile.ticker }}
+              <span
+                class="hover"
+                [ngClass]="is_in_watchlist ? 'star-icon' : ''"
+                (click)="watchlistSwitch()"
+              >
+                <i
+                  class="bi"
+                  [ngClass]="is_in_watchlist ? 'bi-star-fill' : 'bi-star'"
+                ></i>
+              </span>
+            </h1>
+            <h2 class="card-subtitle text-muted mb-0">
+              {{ data.profile.name }}
+            </h2>
+            <p class="card-text mb-0" style="font-size: smaller">
+              {{ data.profile.exchange }}
+            </p>
+            <button class="btn btn-success me-2" (click)="openBuyModal()">
+              Buy
+            </button>
+            <button
+              *ngIf="is_in_portfolio"
+              class="btn btn-danger"
+              (click)="openSellModal()"
+            >
+              Sell
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-3">
+        <img
+          src="{{ data.profile.logo }}"
+          alt=""
+          style="width: 100px; height: 100px"
+        />
+      </div>
+      <div class="col-3">
+        <div class="card border-0">
+          <div class="card-body text-center p-0">
+            <div class="card-title mb-0 text-success">
+              <h1 class="m-0">{{ quote_data.c }}</h1>
+              <h2 class="m-0">
+                <i class="bi bi-caret-up-fill text-green"></i>
+                {{ quote_data.d }} ({{ quote_data.dp }})
+              </h2>
+            </div>
+            <p class="card-subtitle text-muted">{{ data.quote.t }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center mt-1">
+      <span *ngIf="marketOpen; else close" class="text-center text-success"
+        >Market is Open</span
+      >
+      <ng-template #close
+        ><span class="text-center text-danger">
+          Market is close
+        </span></ng-template
+      >
+    </div>
+  </div>
+
+  <div *ngIf="completeData as data" class="container mt-2">
+    <div class="row">
+      <mat-tab-group animationDuration="0ms">
+        <mat-tab label="Summary">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row text-center mt-2">
+                <div class="col-md-6">
+                  <p><b>High Price: </b>{{ data.quote.h }}</p>
+                  <p><b>Low Price: </b>{{ data.quote.l }}</p>
+                  <p><b>Open Price: </b>{{ data.quote.o }}</p>
+                  <p><b>Close Price: </b>{{ data.quote.pc }}</p>
+                </div>
+              </div>
+              <div class="row text-center mt-3">
+                <div class="col-md-12">
+                  <p id="about_company">About the company</p>
+                  <p><b>IPO Start Date: </b>{{ data.profile.ipo }}</p>
+                  <p><b>Industry: </b>{{ data.profile.finnhubIndustry }}</p>
+                  <p>
+                    <b>Webpage: </b
+                    ><a href="{{ data.profile.weburl }}" target="_blank">{{
+                      data.profile.weburl
+                    }}</a>
+                  </p>
+                  <p><b>Company Peers: </b></p>
+                  <span *ngFor="let item of data.peers"
+                    ><p class="d-inline">
+                      <a routerLink="/search/{{ item }}">{{ item }},</a>
+                    </p></span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <app-hourly-price-chart
+                [chartData]="data.historical_hourly"
+              ></app-hourly-price-chart>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Top News">
+          <div class="row">
+            <div *ngFor="let newsItem of data.news" class="col-md-6">
+              <div class="card hover m-2" (click)="openNewsModal(newsItem)">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <img
+                      class="img-fluid p-2 img-uniform"
+                      src="{{ newsItem.image }}"
+                      alt=""
+                    />
+                  </div>
+                  <div class="col-md-8 align-items-center">
+                    <div class="card-body">
+                      <p class="card-text">{{ newsItem.headline }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Charts">
+          <app-main-chart [chartData]="data.historical"></app-main-chart>
+        </mat-tab>
+        <mat-tab label="Insights">
+          <div class="row text-center"><h2>Insider Sentiments</h2></div>
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <table class="table text-center">
+                <tbody>
+                  <tr>
+                    <th>{{ data.profile.name }}</th>
+                    <th>MSPR</th>
+                    <th>Change</th>
+                  </tr>
+                  <tr>
+                    <th>Total</th>
+                    <td>{{ sentiment_values.total_mspr }}</td>
+                    <td>{{ sentiment_values.total_change }}</td>
+                  </tr>
+                  <tr>
+                    <th>Positive</th>
+                    <td>{{ sentiment_values.positive_mspr }}</td>
+                    <td>{{ sentiment_values.positive_change }}</td>
+                  </tr>
+                  <tr>
+                    <th>Negative</th>
+                    <td>{{ sentiment_values.negative_mspr }}</td>
+                    <td>{{ sentiment_values.negative_change }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row text-center">
+            <div class="col-md-6">
+              <app-recommendation-chart
+                [recommendationData]="data.recommendation"
+              ></app-recommendation-chart>
+            </div>
+            <div class="col-md-6">
+              <app-eps-chart [earningData]="data.earning"></app-eps-chart>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+
+<ng-template #error>
+  <div class="container">
+    <div
+      class="alert alert-danger mt-4 text-center mx-auto"
+      style="width: 70%"
+      role="alert"
+    >
+      No data found. Please enter a valid Ticker
+    </div>
+  </div>
+</ng-template>
+
+<!-- Modal -->
+<!-- <div *ngIf="selectedNewsItem" class="modal fade" id="news-modal" #myModal>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="container-fluid">
+          <div class="row justify-content-between">
+            <div class="col-8 align-items-center">
+              <div class="row pb-0">
+                <h1 class="modal-title pb-0 m-0" id="exampleModalLabel">
+                  {{ selectedNewsItem.source }}
+                </h1>
+              </div>
+              <div class="row">
+                <p>
+                  {{ formattedDate }}
+                </p>
+              </div>
+            </div>
+            <div class="col-2">
+              <button type="button" class="btn">
+                <i class="bi bi-x-lg underline"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <h2>{{ selectedNewsItem.headline }}</h2>
+        <p>{{ selectedNewsItem.summary }}</p>
+        <p class="text-muted">
+          For more details click
+          <a href="{{ selectedNewsItem.url }}" target="_blank">here</a>
+        </p>
+      </div>
+      <div class="card m-2">
+        <div class="card-body">
+          <p>Share</p>
+          <a
+            class="twitter-share-button"
+            target="_blank"
+            href="https://twitter.com/intent/tweet?text={{ encodedText }}&url={{
+              encodedURL
+            }}"
+          >
+            <i class="bi bi-twitter-x text-dark"></i
+          ></a>
+          <button type="button" class="btn" data-href="websiteUrl">
+            <a
+              target="_blank"
+              href="https://www.facebook.com/sharer/sharer.php?u={{
+                encodedURL
+              }}"
+              ><i class="bi bi-facebook"></i
+            ></a>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

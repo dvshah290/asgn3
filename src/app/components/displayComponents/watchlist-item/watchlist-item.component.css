@@ -1,0 +1,28 @@
+.text-red {
+  color: #fb2535;
+}
+
+.text-green {
+  color: #117515;
+}
+
+.cross_icon {
+  position: relative;
+  top: 10px;
+  left: 10px;
+  margin: 0px;
+  padding: 0px;
+  width: 13px;
+}
+
+.bolder {
+  font-weight: 500;
+}
+
+.bigger {
+  font-size: 1.5rem;
+}
+
+.hover:hover {
+  cursor: pointer;
+}

@@ -1,0 +1,42 @@
+#about_company {
+  text-decoration: underline;
+  font-size: 1.3rem;
+}
+
+.img-uniform {
+  width: 200px;
+  height: 100px;
+  object-fit: fill;
+}
+
+@media (max-width: 767px) {
+  .img-uniform {
+    height: 300px; /* Increased height for small screens */
+    width: 100%;
+  }
+}
+
+.hover:hover {
+  cursor: pointer;
+}
+
+.underline {
+  text-decoration: underline;
+  color: blue;
+}
+
+.star-icon {
+  color: #fed707;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.alert-button-right {
+  float: right;
+}
+
+.mat-mdc-tab-body-content {
+  height: 100%;
+  overflow: hidden !important;
+}

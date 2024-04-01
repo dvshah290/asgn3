@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="row justify-content-center pt-5">
+    <div class="col-9">
+      <p class="bolder bigger-title">My Portfolio</p>
+      <p class="bolder bigger-subtitle pt-3 pb-2">
+        Money in Wallet: ${{ balance | number : "1.2-2" }}
+      </p>
+    </div>
+  </div>
+  <div *ngIf="portfolio.length; else error">
+    <div class="row justify-content-center">
+      <div class="row" *ngIf="buy_alert">
+        <div
+          class="alert alert-success mt-4 text-center mx-auto d-flex align-items-center justify-content-center p-2"
+          style="width: 70%"
+          role="alert"
+        >
+          <span class="flex-grow-1">
+            {{ buy_alert_ticker }} bought successfully</span
+          >
+          <button class="btn alert-button-right" (click)="closeAlert()">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+      </div>
+      <div class="row" *ngIf="sell_alert">
+        <div
+          class="alert alert-danger mt-4 text-center mx-auto d-flex align-items-center justify-content-center p-2"
+          style="width: 70%"
+          role="alert"
+        >
+          <span class="flex-grow-1"
+            >{{ sell_alert_ticker }} sold successfully</span
+          >
+          <button class="btn alert-button-right" (click)="closeAlert()">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+      </div>
+      <div *ngFor="let portfolio of portfolio" class="col-9">
+        <app-portfolio-item
+          (parentBuyAlert)="handleBuyAlert($event)"
+          (parentSellAlert)="handleSellAlert($event)"
+          [portfolioItem]="portfolio"
+        ></app-portfolio-item>
+      </div>
+    </div>
+  </div>
+  <ng-template #error>
+    <div class="row justify-content-center">
+      <div class="col-9">
+        <div class="alert alert-warning text-center">
+          Currently you don't have any stock.
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

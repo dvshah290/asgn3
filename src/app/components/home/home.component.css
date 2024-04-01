@@ -1,0 +1,23 @@
+#heading {
+  font-family: sans-serif;
+  font-size: larger;
+}
+
+#stock-search-field {
+  border-color: #10136f !important;
+}
+
+#input-field {
+  border: none !important;
+  width: auto;
+  min-width: 0px;
+  border-radius: 25px;
+  box-shadow: none !important;
+  &:focus {
+    outline: none;
+  }
+}
+
+.no-outline:focus {
+  border: none;
+}
